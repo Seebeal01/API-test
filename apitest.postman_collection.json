@@ -1,0 +1,239 @@
+{
+	"info": {
+		"_postman_id": "d96d1eef-00b9-4eff-b003-c44d09e9f289",
+		"name": "apitest",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "37078321"
+	},
+	"item": [
+		{
+			"name": "New Request",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"let Color=pm.variables.replaceIn('{{$randomColor}}')\r",
+							"pm.collectionVariables.set(\"RandomColor\",Color)\r",
+							"let Month =pm.variables.replaceIn('{{$randomMonth}}')\r",
+							"pm.collectionVariables.set(\"RandomMonth\",Month)\r",
+							"let Isbn=pm.variables.replaceIn('{{$randomInt}}')\r",
+							"pm.collectionVariables.set(\"RandomIsbn\",Isbn)\r",
+							"let Aisle=pm.variables.replaceIn('{{$randomInt}}')\r",
+							"pm.collectionVariables.set(\"RandomAisle\",Aisle)\r",
+							"let FirstName=pm.variables.replaceIn('{{$randomFirstName}}')\r",
+							"pm.collectionVariables.set(\"RandomFirstName\",FirstName)\r",
+							"let LastName=pm.variables.replaceIn('{{$randomLastName}}')\r",
+							"pm.collectionVariables.set(\"RandomLastName\",LastName)"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let myResponsr=pm.response.json()\r",
+							"let idOfTheBook=myResponsr.ID\r",
+							"pm.collectionVariables.set(\"ID\",idOfTheBook)\r",
+							"\r",
+							"pm.test(\"This Is To Check The Add Book Function \",function(){\r",
+							"     pm.expect(myResponsr.Msg).to.eql(\"successfully added\")\r",
+							"})\r",
+							"pm.test(\"This To Check Status Code\",function(){\r",
+							"\r",
+							"pm.response.to.have.status(200)}\r",
+							")"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"name\":\"{{RandomColor}} {{RandomMonth}}\",\r\n\"isbn\":\"{{RandomIsbn}}\",\r\n\"aisle\":\"{{RandomAisle}}\",\r\n\"author\":\"{{RandomFirstName}} {{RandomLastName}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://rahulshettyacademy.com/Library/Addbook.php",
+					"protocol": "https",
+					"host": [
+						"rahulshettyacademy",
+						"com"
+					],
+					"path": [
+						"Library",
+						"Addbook.php"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "New Request",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let myResponsr = pm.response.json()\r",
+							"\r",
+							"pm.test(\"This To Check Status Code\", function () {\r",
+							"\r",
+							"    pm.response.to.have.status(200)\r",
+							"}\r",
+							")\r",
+							"pm.test(\"This Is To Check The Get Book Function \", function () {\r",
+							"    pm.expect(myResponsr[0]).to.have.property(\"author\")\r",
+							"})\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://rahulshettyacademy.com/Library/GetBook.php?ID={{ID}}",
+					"protocol": "https",
+					"host": [
+						"rahulshettyacademy",
+						"com"
+					],
+					"path": [
+						"Library",
+						"GetBook.php"
+					],
+					"query": [
+						{
+							"key": "ID",
+							"value": "{{ID}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "New Request",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let myResponsr=pm.response.json()\r",
+							"\r",
+							"pm.test(\"This To Check Status Code\",function(){\r",
+							"\r",
+							"pm.response.to.have.status(200)}\r",
+							")\r",
+							"pm.test(\"This Is To Check The Delete Book Function \",function(){\r",
+							"     pm.expect(myResponsr.msg).to.eql(\"book is successfully deleted\")\r",
+							"})"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"ID\" : \"{{ID}}\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://rahulshettyacademy.com/Library/DeleteBook.php",
+					"protocol": "https",
+					"host": [
+						"rahulshettyacademy",
+						"com"
+					],
+					"path": [
+						"Library",
+						"DeleteBook.php"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "RandomColor",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "RandomMonth",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "RandomIsbn",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "RandomAisle",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "RandomFirstName",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "RandomLastName",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "ID",
+			"value": "",
+			"type": "string"
+		}
+	]
+}
